@@ -50,35 +50,45 @@ function computerPlay() {
     return choices[getRandomInteger(0,2)];
 }
 
-function getPlayerSelection() {
-    return prompt("rock, paper or scissors?").toLowerCase()
-}
-
 function game() {
     let scorePlayer = 0;
     let scoreComputer = 0;
 
-    for (let i = 0; i < 5; i++) {
-        let computerSelection = computerPlay();
-        let playerSelection = getPlayerSelection();
-
-        let winner = getWinner(playerSelection, computerSelection);
+    const btns = document.querySelectorAll('button');
         
-        if (winner == "player") {
-            scorePlayer ++;
+    btns.forEach((button) => {
+        button.addEventListener('click', () => {
+            let computerSelection = computerPlay()
+            let winner = getWinner(button.id, computerSelection);
+            console.log(button.id, computerSelection);
+
+            windoc = document.querySelector('.winner');
+            compdoc = document.querySelector('.computer');
+            scoredoc = document.querySelector('.score');
+
+            if (winner == "player") {
+                    scorePlayer ++;
+                    windoc.textContent = "You won!";
+            }
+            else if (winner == "computer") {
+                    scoreComputer ++;
+                    windoc.textContent = "You lost!";
+            }
+            else if (winner == "tie") {
+                console.log("tie");
+                windoc.textContent = "You tied!";
+            }
+            else {
+                console.log("WRONG INPUT!!!");                    i--;
+            }
+            compdoc.textContent = `The computer chose: ${computerSelection}`;
+            scoredoc.textContent = `player: ${scorePlayer} computer: ${scoreComputer}`;
+
+            })  
         }
-        else if (winner == "computer") {
-            scoreComputer ++;
-        }
-        else if (winner == "tie") {
-            console.log("tie");
-        }
-        else {
-            console.log("WRONG INPUT!!!");
-            i--;
-        }
-        console.log(`Player: ${scorePlayer}\nComputer: ${scoreComputer}`);
+
+        )
+
     }
-}
 
 game()
